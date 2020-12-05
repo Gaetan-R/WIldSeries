@@ -35,15 +35,17 @@ class CategoryController extends AbstractController
      */
     public function show(string $categoryName): Response
     {
+
         $category = $this->getDoctrine()
             ->getRepository(Category::class)
             ->findOneBy(['name' => $categoryName]);
 
         if (!$category) {
             throw $this->createNotFoundException(
-                'No category with id : ' . $categoryName. 'found in category\'s table.'
+                'No category with id : ' .$categoryName. 'found in category\'s table.'
             );
         }
+
         $programs = $this->getDoctrine()
             ->getRepository(Program::class)
             ->findBy(
@@ -57,6 +59,5 @@ class CategoryController extends AbstractController
             'programs' => $programs
         ]);
     }
-
 
 }
