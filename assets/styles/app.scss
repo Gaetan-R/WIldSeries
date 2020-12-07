@@ -1,6 +1,10 @@
 $body-bg: #8004d1;
 $body-color: #fdb126;
 $nav-color: grey;
+@font-face {
+  font-family: "Techno";
+  src: url('../font/Techno.ttf');
+}
 
 @import "~bootstrap/scss/bootstrap";
 
@@ -27,4 +31,12 @@ img{
 
 .navbar-dark .navbar-nav .active > .nav-link{
   color : $body-color;
+}
+
+h1 {
+  padding-top : 10px;
+  text-shadow: 2px 4px 3px black;
+  font-family: "Techno";
+
+
 }
