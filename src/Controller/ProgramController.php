@@ -2,13 +2,18 @@
 // src/Controller/ProgramController.php
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\ProgramType;
+use App\Form\CategoryType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 
 /**
  * @Route("/program", name="program_")
@@ -30,6 +35,7 @@ Class ProgramController extends AbstractController
             'programs' => $programs
         ]);
     }
+
 
     /**
      * @Route("/{id}", name="show", requirements={"id"="\d+"})
@@ -91,4 +97,23 @@ Class ProgramController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route ("/new", name="new")
+     */
+    public function new (Request $request ) :Response
+    {
+        $program = new Program();
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($program);
+            $entityManager->flush();
+            return $this->redirectToRoute('program_index');
+        }
+        return $this->render('program/new.html.twig', [
+            "form" => $form->createView(),
+        ]);
+
+    }
 }
