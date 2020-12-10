@@ -10,7 +10,7 @@
             <p>{{ program.summary }}</p>
             <p>Catégorie : {{ program.category.name }}</p>
             {% for season in seasons %}
-                <span><a href="{{ path('program_season_show', {programId: program.id, seasonId: season.id}) }}">|Saison {{ season.id }}|</a> </span>
+                <span><a href="{{ path('program_season_show', {programId: program.id, seasonId: season.id}) }}">|Saison {{ season.number }}|</a> </span>
 
             {% else %}
                 Aucune saison disponible

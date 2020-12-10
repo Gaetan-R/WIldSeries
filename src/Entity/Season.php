@@ -35,7 +35,7 @@ class Season
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity=Program::class, inversedBy="season", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Program::class, inversedBy="seasons")
      * @ORM\JoinColumn(nullable=false)
      */
     private $program;
@@ -96,7 +96,7 @@ class Season
         return $this->program;
     }
 
-    public function setProgram(Program $program): self
+    public function setProgram(?Program $program): self
     {
         $this->program = $program;
 
