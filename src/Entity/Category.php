@@ -6,9 +6,12 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @UniqueEntity("name", message="Cette catégorie existe déjà.")
  */
 class Category
 {
@@ -21,7 +24,10 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
+     * @Assert\Length(max="100", maxMessage="Le nom saisie {{ value }} est trop long, elle ne devrait pas dépasser {{ limit }} caractères")
      */
+
     private $name;
 
     public function getId(): ?int
@@ -40,6 +46,10 @@ class Category
 
         return $this;
     }
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Program", mappedBy="category")
+     */
 
     private $programs;
 
