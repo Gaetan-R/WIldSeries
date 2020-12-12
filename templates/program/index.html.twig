@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}All programs{% endblock %}
+{% block title %}Tous les programmes{% endblock %}
 
 {% block content %}
-    <h1>Toutes les séries</h1>
+    <h1>Toutes les series</h1>
     {% for program in programs %}
         <div>
             <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
@@ -13,6 +13,10 @@
     {% else %}
         Aucune série trouvée.
     {% endfor %}
+
+    <div>
+    <a href="{{ path('program_new') }}">Créer un nouveau programme</a>
+    </div>
 
     <a href="{{ path('app_index') }}">
         Retour à l'accueil
