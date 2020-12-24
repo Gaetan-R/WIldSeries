@@ -8,17 +8,17 @@
         <div>
             <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
             <p>{{ program.summary }}</p>
-            <a href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
+            <a class="ref-show" href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
         </div>
     {% else %}
         Aucune série trouvée.
     {% endfor %}
 
     <div>
-    <a href="{{ path('program_new') }}">Créer un nouveau programme</a>
+    <a class="ref-show" href="{{ path('program_new') }}">Créer un nouveau programme</a>
     </div>
 
-    <a href="{{ path('app_index') }}">
+    <a class="ref-return" href="{{ path('app_index') }}">
         Retour à l'accueil
     </a>
 {% endblock %}
