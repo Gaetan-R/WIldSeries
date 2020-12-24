@@ -1,42 +1,15 @@
-$body-bg: #8004d1;
-$body-color: #fdb126;
-$nav-color: grey;
+@import 'variables';
+@import 'global';
+@import 'navbar';
+@import "~bootstrap/scss/bootstrap";
 @font-face {
   font-family: "Techno";
   src: url('../font/Techno.ttf');
 }
-
-@import "~bootstrap/scss/bootstrap";
-
-
-.navbar-dark .navbar-brand:hover{
-  color : $body-color;
+@font-face {
+  font-family: "Atlas";
+  src: url('../font/dai-atlas-font/DaiAtlas-Y0Z8.ttf');
 }
 
-.navbar-dark .navbar-brand{
-  color : $nav-color;
-}
-
-img{
-  border-radius: 20px;
-}
-
-.navbar-dark .navbar-nav .nav-link:hover{
-  color : $body-color;
-}
-
-.navbar-expand-lg .navbar-nav .nav-link{
-  padding-left: 8rem;
-}
-
-.navbar-dark .navbar-nav .active > .nav-link{
-  color : $body-color;
-}
-
-h1 {
-  padding-top : 10px;
-  text-shadow: 2px 4px 3px black;
-  font-family: "Techno";
 
 
-}

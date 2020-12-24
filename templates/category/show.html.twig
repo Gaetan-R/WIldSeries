@@ -9,13 +9,13 @@
             <li>
                 <h2>{{ program.id }} - {{ program.title }}</h2>
                 <p>{{ program.summary }}</p>
-                <a href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
+                <a class="ref-show" href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
             </li>
         </ul>
     {% else %}
         Aucune série trouvée.
     {% endfor %}
-    <a href="{{ path('category_index') }}">
+    <a class="ref-return" href="{{ path('category_index') }}">
         Retour à la liste des catégories
     </a>
 

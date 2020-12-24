@@ -2,32 +2,30 @@
 
 namespace App\DataFixtures;
 
+use Faker;
 use App\Entity\Episode;
-use App\Entity\Season;
-use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Faker;
+use Doctrine\Persistence\ObjectManager;
 
 class EpisodeFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $faker = Faker\Factory::create('fr_FR');
-        for ($i = 1; $i <= 10; $i++) {
-            $episode = new Episode();
-            $episode->setTitle($faker->title);
-            $episode->setNumber($faker->numberBetween(1, 10));
-            $episode->setSynopsis($faker->text);
-            $episode->setSeason($this->getReference('season_1'));
-            $manager->persist($episode);
-            $this->addReference('episode_' . $i, $episode);
+        $faker = Faker\Factory::create('en_US');
+        for($i=0; $i < 50; $i++) {
+           $episode = new Episode();
+           $episode->setTitle($faker->domainWord);
+           $episode->setNumber($faker->numberBetween(1, 30));
+           $episode->setSynopsis($faker->text);
+           $episode->setSeason($this->getReference('season_0'));
+           $manager->persist($episode);
         }
         $manager->flush();
     }
 
     public function getDependencies()
     {
-       return [SeasonFixtures::class];
+        return [SeasonFixtures::class];
     }
 }

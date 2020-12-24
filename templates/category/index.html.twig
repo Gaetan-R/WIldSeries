@@ -3,10 +3,10 @@
 {% block title %} List of categories{% endblock %}
 
 {% block content %}
-    <h1>All categories: </h1>
+    <h1>Categories</h1>
     {% for category in categories %}
         <div>
-            <a href="{{ path("category_show", { categoryName: category.name }) }}">
+            <a class="ref-show" href="{{ path("category_show", { categoryName: category.name }) }}">
                 <h2>{{ loop.index }} - {{ category.name }} </h2>
             </a>
         </div>
@@ -15,7 +15,7 @@
     {% endfor %}
 
     <div>
-        <a href="{{ path('category_new') }}">Créer une nouvelle catégorie </a>
+        <a class="ref-return" href="{{ path('category_new') }}">Créer une nouvelle catégorie </a>
     </div>
-        <a href="{{ path('app_index') }}">Retour à l'accueil </a>
+        <a class="ref-return" href="{{ path('app_index') }}">Retour à l'accueil </a>
     {% endblock %}
