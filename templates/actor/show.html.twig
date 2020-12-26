@@ -12,7 +12,7 @@
 
             {% for program in actor.programs %}
                 <div>
-                    <a class="ref-show" href="{{ path('program_show', { id: program.id }) }}">{{ program.title }}</a>
+                    <a class="ref-show" href="{{ path('program_show', { slug: program.id }) }}">{{ program.title }}</a>
                 </div>
             {% else %}
                 Aucun acteur trouvé.
