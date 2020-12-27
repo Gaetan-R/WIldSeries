@@ -12,3 +12,4 @@ Photo ( l'affichage des erreurs quand on ne remplit pas un champ ne se voit pas 
 - Quête 15 : https://www.loom.com/share/2c7b4fe42ee147cfaf137cc4529607a2
 - Quête 16 : https://www.loom.com/share/da05fa36e07c4ba2ab3140d232a24588
 - Quête 17 : https://www.loom.com/share/5143113d52114bd7b615c89cdea51266
+- Quête 18 : https://www.loom.com/share/e584693745f6429f9d15526e1116b204
