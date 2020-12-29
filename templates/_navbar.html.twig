@@ -61,15 +61,26 @@
             </li>
         </ul>
     </div>
+
     <nav class="navbar navbar-light ">
         <form class="form-inline">
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1" >
-                        <img src="{{ asset('build/screen.png') }}" alt="logo" width="24px"/>
+                        <img src="{{ asset('build/screen.png') }}" alt="logo" width="10px"/>
                     </span>
+
+                   {% if app.user %}
+                      {{ app.user.email }}
+                   <div class="nav-item connexion">
+                           <button class="logout"><a href="{{ path('app_logout') }}"> Se déconnecter</a></button>
+                   </div>
+                        {% else %}
+                                <div class="nav-item connexion">
+                           <button class="login"><a href="{{ path('app_login') }}"> Se connecter</a></button>
+                                </div>
+                        {% endif %}
                 </div>
-                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
             </div>
         </form>
     </nav>
