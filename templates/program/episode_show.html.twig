@@ -9,9 +9,7 @@
             <h1 class="mt-0">{{ program.title }} Saison {{ season.number }} </h1>
             <p>Sortie en {{ season.year }}</p>
             <ul>
-                <li>
-                    {{ episode.number }} - {{ episode.title }}
-                </li>
+                <li>{{ episode.number }} - {{ episode.title }}</li>
             </ul>
             <h2 class="mt-0">Résumé de l'épisode : </h2>
             <p class="mt-0">{{ episode.synopsis }} </p>
@@ -20,6 +18,28 @@
             </div>
         </div>
     </div>
+    <div>
+        <h3>Commentaires</h3>
+        {% for comment in episode.comments %}
+            <ul>
+                <li>{{ comment.author.email }} - {{ comment.rate }} <br>
+                    <th>{{ comment.comment }}</th>
+                </li>
+            </ul>
+        {% else %}
+            Pas de commentaire pour le moment
+        {% endfor %}
+    </div>
+
+    {% if app.user %}
+        <div class="media-body">
+            <h3>Ajouter un commentaire</h3>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type='submit' value='Ajouter un commentaire'>
+            {{ form_end(form) }}
+        </div>
+    {% endif %}
 
 
 
