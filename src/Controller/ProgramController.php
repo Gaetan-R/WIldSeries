@@ -7,19 +7,18 @@ use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
-use App\Form\CategoryType;
 use App\Form\CommentType;
 use App\Form\ProgramType;
 use App\Service\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 /**
@@ -52,10 +51,12 @@ Class ProgramController extends AbstractController
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
             $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
-            $entityManager = $this->getDoctrine()->getManager();
+            $program->setOwner($this->getUser());
             $entityManager->persist($program);
+
             $entityManager->flush();
 
             $email = (new Email())
@@ -130,9 +131,10 @@ Class ProgramController extends AbstractController
     public function showEpisode(Program $program, Season $season, Episode $episode, Request $request, EntityManagerInterface  $entityManager) : Response
     {
         $comment = new Comment();
+        $user = $this->getUser();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-        $user = $this->getUser();
+
 
         if($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -142,10 +144,6 @@ Class ProgramController extends AbstractController
             $entityManager->flush();
         }
 
-
-
-
-
         return $this->render('program/episode_show.html.twig', [
             'program' => $program,
             'season' => $season,
@@ -154,6 +152,36 @@ Class ProgramController extends AbstractController
 
         ]);
     }
+
+    /**
+     * @Route ("/{slug}/edit", name="edit", methods={"GET", "POST"})
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"slug": "slug"}})
+     */
+
+    /**
+     * @Route("/{slug}/edit", name="edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Program $program): Response
+    {
+        if (!($this->getUser() == $program->getOwner())) {
+            throw new AccessDeniedException('Only the owner can edit the program!');
+        }
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('program_index');
+        }
+
+        return $this->render('program/edit.html.twig', [
+            'program'=> $program,
+            'form' => $form->createView(),
+        ]);
+
+    }
+
 
 
 }
