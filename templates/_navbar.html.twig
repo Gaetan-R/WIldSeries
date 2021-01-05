@@ -73,13 +73,23 @@
                    {% if app.user %}
                       {{ app.user.email }}
                    <div class="nav-item connexion">
-                           <button class="logout"><a href="{{ path('app_logout') }}"> Se déconnecter</a></button>
+                           <button class="logout"><a href="{{ path('app_logout') }}"> Se déconnecter🙈</a></button>
                    </div>
                         {% else %}
                                 <div class="nav-item connexion">
-                           <button class="login"><a href="{{ path('app_login') }}"> Se connecter</a></button>
+                           <button class="login"><a href="{{ path('app_login') }}"> Se connecter🙊</a></button>
                                 </div>
                         {% endif %}
+                    {% if app.user %}
+
+                        <div class="nav-item connexion">
+                            <button class="logout"><a href="{{ path('my_account') }}"> Mon compte 🐵</a></button>
+                        </div>
+                    {% else %}
+                        <div class="nav-item connexion">
+                            <button class="login"><a href="{{ path('app_register') }}"> S'inscrire 🙈</a></button>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </form>
