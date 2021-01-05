@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+ {% block content %}
+
+    <h1>Salut👋 {{ app.user.email }}!</h1>
+
+     {% for role in app.user.roles %}
+
+     <h2> Statut : {{ role }} </h2>
+
+     {% endfor %}
+
+    <h2>Liste des séries ajoutées :</h2>
+
+     {% for program in userSeries %}
+
+         <ul>
+             <li>
+                 <img class="align-self-start mr-3 " width="200px" src="{{program.poster}}" alt="{{ program.title }} poster">
+                 <h2>Catégorie : {{ program.category.name }}</h2>
+              <p>{{ program.id}}/{{ program.title}}: {{ program.summary }}</p>
+
+             </li>
+         </ul>
+
+     {% endfor %}
+
+{% endblock %}
