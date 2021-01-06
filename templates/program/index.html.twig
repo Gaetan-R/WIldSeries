@@ -4,6 +4,15 @@
 
 {% block content %}
     <h1>Toutes les series</h1>
+    <div class="container-search">
+    {{ form_start(form) }}
+    <div class="search">
+    {{ form_widget(form) }}
+        </div>
+            <button class="btn-warning" id="btn-search">Search</button>
+    </div>
+    {{ form_end(form) }}
+    
     {% for program in programs %}
         <div>
             <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
