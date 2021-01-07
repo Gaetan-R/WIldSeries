@@ -68,6 +68,8 @@ Class ProgramController extends AbstractController
 
             $entityManager->flush();
 
+            $this->addFlash('success', 'Nouvelle série créée !🐒');
+
             $email = (new Email())
                 ->from($this->getParameter('mailer_from'))
                 ->to('your_email@exemple.com')
