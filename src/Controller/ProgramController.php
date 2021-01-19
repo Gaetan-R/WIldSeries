@@ -31,7 +31,7 @@ Class ProgramController extends AbstractController
 {
     /**
      * @Route("/", name="index")
-     *@return Response
+     * @return Response
      */
     public function index(Request $request, ProgramRepository $programRepository): Response
     {
@@ -42,7 +42,7 @@ Class ProgramController extends AbstractController
             $search = $form->getData()['search'];
             $programs = $programRepository->findlikeName($search);
         } else {
-            $programs=$programRepository->findAll();
+            $programs = $programRepository->findAll();
 
         }
         return $this->render('program/index.html.twig', [
@@ -54,7 +54,7 @@ Class ProgramController extends AbstractController
     /**
      * @Route ("/new", name="new")
      */
-    public function new (Request $request, Slugify $slugify, MailerInterface $mailer) :Response
+    public function new(Request $request, Slugify $slugify, MailerInterface $mailer): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -76,7 +76,7 @@ Class ProgramController extends AbstractController
                 ->subject('Une nouvelle série vient d\'être ajoutée')
                 ->html($this->renderView('program/newProgramEmail.html.twig', ['program' => $program]));
 
-                $mailer->send($email);
+            $mailer->send($email);
 
             return $this->redirectToRoute('program_index');
         }
@@ -139,7 +139,7 @@ Class ProgramController extends AbstractController
      * @ParamConverter ("episode", class="App\Entity\Episode", options={"mapping": {"episodeSlug": "slug"}})
      * @return Response
      */
-    public function showEpisode(Program $program, Season $season, Episode $episode, Request $request, EntityManagerInterface  $entityManager) : Response
+    public function showEpisode(Program $program, Season $season, Episode $episode, Request $request, EntityManagerInterface $entityManager): Response
     {
         $comment = new Comment();
         $user = $this->getUser();
@@ -147,7 +147,7 @@ Class ProgramController extends AbstractController
         $form->handleRequest($request);
 
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $comment->setAuthor($user);
             $comment->setEpisode($episode);
@@ -187,10 +187,31 @@ Class ProgramController extends AbstractController
         }
 
         return $this->render('program/edit.html.twig', [
-            'program'=> $program,
+            'program' => $program,
             'form' => $form->createView(),
         ]);
 
+    }
+
+
+    /**
+     * @Route("/{id}/watchlist", name="watchlist")
+     * @return Response
+     */
+    public function addToWatchlist(Request $request, Program $program, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->getUser()->getPrograms()->contains($program)) {
+            $this->getUser()->removeProgram($program);
+        }
+        else {
+            $this->getUser()->addProgram($program);
+        }
+
+        $entityManager->flush();
+
+        return $this->json([
+            'isInWatchlist' => $this->getUser()->isInWatchlist($program)
+        ]);
     }
 
 

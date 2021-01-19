@@ -9,6 +9,13 @@
             <h1 class="mt-0">{{ program.title }}</h1>
             <p>{{ program.summary }}</p>
             <p>Catégorie : {{ program.category.name }}</p>
+            <p> Favoris
+
+            <a id="watchlist" class="like" href="{{ path('program_watchlist', {id: program.id})}}">
+                <i class="{{ app.user.isInWatchlist(program) ? 'fas' : 'far' }} fa-heart"></i>
+            </a>
+            </p>
+
             {% for season in seasons %}
                 <span><a class="ref-show" href="{{ path('program_season_show', {programSlug: program.slug, seasonId: season.id}) }}">|Saison {{ season.number }}|</a> </span>
 
