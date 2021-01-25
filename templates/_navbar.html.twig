@@ -70,16 +70,21 @@
                         <img src="{{ asset('build/screen.png') }}" alt="logo" width="10px"/>
                     </span>
 
-                   {% if app.user %}
-                      {{ app.user.email }}
-                   <div class="nav-item connexion">
-                           <button class="logout"><a href="{{ path('app_logout') }}"> Se déconnecter🙈</a></button>
-                   </div>
-                        {% else %}
-                                <div class="nav-item connexion">
-                           <button class="login"><a href="{{ path('app_login') }}"> Se connecter🙊</a></button>
-                                </div>
-                        {% endif %}
+                    {% if app.user %}
+                        {% trans with {'%username%': app.user.email} %}
+                            hello_username
+                        {% endtrans %} !
+                        <div class="nav-item connexion">
+                            <button class="logout">
+                                <a href="{{ path('app_logout') }}"> 🙈{{ 'account.logout'|trans }}</a>
+                            </button>
+                        </div>
+                    {% else %}
+                        <div class="nav-item connexion">
+                            <button class="login">
+                                <a href="{{ path('app_login') }}">🙊 {{ 'account.login'|trans }}</a></button>
+                        </div>
+                    {% endif %}
                     {% if app.user %}
 
                         <div class="nav-item connexion">

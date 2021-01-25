@@ -2,8 +2,17 @@
 
 {% block title %}Wild Series{% endblock %}
 
-{% block content %}<h1 class="home">{{ welcome }}</h1>
+{% block content %}<h1 class="home">{{'welcome'|trans}}</h1>
 
+    <h1>{{'welcome'|trans}}</h1>
+
+    <div>
+
+        <a href={{path('app_login')}}>{{ 'account.sign_in'|trans }}</a>
+
+        <a href={{path('app_register')}}>{{ 'account.register'|trans }}</a>
+
+    </div>
 
 {% endblock %}
 
